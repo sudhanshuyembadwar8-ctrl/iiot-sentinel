@@ -222,7 +222,7 @@
 
 <!-- Loading Overlay -->
 <div id="loading">
-  <div class="loading-logo">⚡ IIoT Sentinel</div>
+  <div class="loading-logo">IIoT Sentinel</div>
   <div class="loading-sub">Connecting to factory floor...</div>
   <div class="loading-bar"><div class="loading-fill"></div></div>
 </div>
@@ -231,7 +231,7 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <div class="logo-icon">⚡</div>
+      <div class="logo-icon" style="font-size:11px;font-weight:700;color:#63b3ed;">IOT</div>
       <div>
         <div class="logo-text">IIoT Sentinel</div>
         <div class="logo-sub">Industrial Monitoring System</div>
@@ -282,10 +282,10 @@
         <span class="alert-count" id="alertCount">0</span>
       </div>
       <div class="alerts-list" id="alertsList">
-        <div class="no-alerts"><div class="no-alerts-icon">✅</div>No alerts yet.</div>
+        <div class="no-alerts"><div class="no-alerts-icon" style="font-size:13px;color:#48bb78;font-family:var(--mono);">[ ALL CLEAR ]</div>No alerts yet.</div>
       </div>
       <div class="right-footer">
-        <a class="export-btn" href="/api/export" download="sentinel_export.csv">⬇ Export CSV</a>
+        <a class="export-btn" href="/api/export" download="sentinel_export.csv">[ Export CSV ]</a>
       </div>
     </div>
   </main>
@@ -302,12 +302,12 @@ const COLORS = {
   flow_rate:   '#76e4f7',
 };
 const ICONS = {
-  temperature: '🌡',
-  humidity:    '💧',
-  pressure:    '⚡',
-  vibration:   '📳',
-  power:       '🔋',
-  flow_rate:   '🌊',
+  temperature: '[T]',
+  humidity:    '[H]',
+  pressure:    '[P]',
+  vibration:   '[V]',
+  power:       '[W]',
+  flow_rate:   '[F]',
 };
 
 // ── State ───────────────────────────────────────────────────────────────────
@@ -396,7 +396,7 @@ function initMiniChart(sensor, canvasId) {
 // ── Sensor card rendering ────────────────────────────────────────────────────
 function buildSensorCard(sensor, r) {
   const color = COLORS[sensor];
-  const icon  = ICONS[sensor] || '📡';
+  const icon  = ICONS[sensor] || '[S]';
   const id    = 'card-' + sensor;
   const cid   = 'mini-' + sensor;
   return `
@@ -519,7 +519,8 @@ function onData(payload) {
 
 // ── WebSocket ────────────────────────────────────────────────────────────────
 function connect() {
-  const ws = new WebSocket(`ws://${location.host}/ws`);
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  const ws = new WebSocket(`${proto}://${location.host}/ws`);
 
   ws.onopen = () => {
     document.getElementById('connDot').style.background = '#48bb78';
